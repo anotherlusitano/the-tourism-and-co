@@ -58,7 +58,9 @@ flutter:
   uses-material-design: true
 
   fonts:
-  - family: Muli
-    fonts:
-      - asset: assets/fonts/Muli-Light.ttf
-        weight: 300
+    - family: Montserrat
+      fonts:
+        - asset: assets/fonts/Montserrat-Regular.ttf
+          weight: 300
+        - asset: assets/fonts/Montserrat-Bold.ttf
+          weight: 600 

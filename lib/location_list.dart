@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'components/location_tile.dart';
+import 'components/banner_image.dart';
+import 'components/default_app_bar.dart';
 import 'models/location.dart';
 import 'location_detail.dart';
 import 'styles.dart';
@@ -25,7 +27,7 @@ class _LocationListState extends State<LocationList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("Locations", style: Styles.navBarTitle)),
+        appBar: DefaultAppBar(),
         body: RefreshIndicator(
             onRefresh: loadData,
             child: Column(children: [
@@ -37,7 +39,7 @@ class _LocationListState extends State<LocationList> {
   Future<void> loadData() async {
     if (this.mounted) {
       setState(() => this.loading = true);
-      Timer(Duration(milliseconds: 8000), () async {
+      Timer(Duration(milliseconds: 3000), () async {
         final locations = await Location.fetchAll();
         setState(() {
           this.locations = locations;
@@ -70,8 +72,7 @@ class _LocationListState extends State<LocationList> {
         child: Container(
           height: ListItemHeight,
           child: Stack(children: [
-            _tileImage(location.url, MediaQuery.of(context).size.width,
-                ListItemHeight),
+            BannerImage(url: location.url, height: ListItemHeight),
             _tileFooter(location),
           ]),
         ));
@@ -80,22 +81,6 @@ class _LocationListState extends State<LocationList> {
   void _navigateToLocationDetail(BuildContext context, int locationID) {
     Navigator.push(context,
         MaterialPageRoute(builder: (context) => LocationDetail(locationID)));
-  }
-
-  Widget _tileImage(String url, double width, double height) {
-    if (url.isEmpty) {
-      return Container();
-    }
-
-    try {
-      return Container(
-        constraints: BoxConstraints.expand(),
-        child: Image.network(url, fit: BoxFit.cover),
-      );
-    } catch (e) {
-      print("could not load image $url");
-      return Container();
-    }
   }
 
   Widget _tileFooter(Location location) {
@@ -111,9 +96,5 @@ class _LocationListState extends State<LocationList> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [overlay],
     );
-  }
-
-  Widget _itemTitle(Location location) {
-    return Text('${location.name}', style: Styles.textDefault);
   }
 }
