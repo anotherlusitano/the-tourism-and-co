@@ -14,11 +14,12 @@ class LocationDetail extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(title: Text(location.name, style: Styles.navBarTitle)),
-        body: Column(
+        body: SingleChildScrollView(
+            child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: _renderBody(context, location),
-        ));
+        )));
   }
 
   List<Widget> _renderBody(BuildContext context, Location location) {
@@ -51,9 +52,14 @@ class LocationDetail extends StatelessWidget {
   }
 
   Widget _bannerImage(String url, double height) {
-    return Container(
-      constraints: BoxConstraints.tightFor(height: height),
-      child: Image.network(url, fit: BoxFit.fitWidth),
-    );
+    try {
+      return Container(
+        constraints: BoxConstraints.tightFor(height: height),
+        child: Image.network(url, fit: BoxFit.fitWidth),
+      );
+    } catch (e) {
+      print("could not load image $url");
+      return Container();
+    }
   }
 }
