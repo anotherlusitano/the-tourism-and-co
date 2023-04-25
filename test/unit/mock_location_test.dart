@@ -1,9 +1,9 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:the_tourism_and_co/mocks/mock_location.dart';
+import 'package:test/test.dart';
+import '../../lib/mocks/mock_location.dart';
 
 void main() {
-  test('test fetchAny', () {
-    final mockLocation = MockLocation.fetchAny();
+  test('test fetchAny', () async {
+    final mockLocation = MockLocation.fetchAll().first;
     expect(mockLocation, isNotNull);
     expect(mockLocation.name, isNotEmpty);
   });

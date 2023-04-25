@@ -6,11 +6,11 @@ import 'styles.dart';
 class LocationDetail extends StatelessWidget {
   final int locationID;
 
-  const LocationDetail(this.locationID, {super.key});
+  LocationDetail(this.locationID);
 
   @override
   Widget build(BuildContext context) {
-    var location = MockLocation.fetch(locationID);
+    var location = MockLocation.fetch(this.locationID);
 
     return Scaffold(
         appBar: AppBar(title: Text(location.name, style: Styles.navBarTitle)),
@@ -31,23 +31,23 @@ class LocationDetail extends StatelessWidget {
 
   List<Widget> _renderFacts(BuildContext context, Location location) {
     var result = <Widget>[];
-    for (int i = 0; i < location.facts.length; i++) {
-      result.add(_sectionTitle(location.facts[i].title));
-      result.add(_sectionText(location.facts[i].text));
+    for (int i = 0; i < (location.facts ?? []).length; i++) {
+      result.add(_sectionTitle(location.facts![i].title));
+      result.add(_sectionText(location.facts![i].text));
     }
     return result;
   }
 
   Widget _sectionTitle(String text) {
     return Container(
-        padding: const EdgeInsets.fromLTRB(25.0, 25.0, 25.0, 10.0),
+        padding: EdgeInsets.fromLTRB(25.0, 25.0, 25.0, 10.0),
         child:
             Text(text, textAlign: TextAlign.left, style: Styles.headerLarge));
   }
 
   Widget _sectionText(String text) {
     return Container(
-        padding: const EdgeInsets.fromLTRB(25.0, 15.0, 25.0, 15.0),
+        padding: EdgeInsets.fromLTRB(25.0, 15.0, 25.0, 15.0),
         child: Text(text, style: Styles.textDefault));
   }
 
